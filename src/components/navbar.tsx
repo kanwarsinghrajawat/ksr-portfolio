@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { LuMenu, LuX, LuMusic } from "react-icons/lu";
+import { LuMenu, LuX, LuSun, LuMoon } from "react-icons/lu";
 import { useTheme } from "next-themes";
 
 const navItems = [
@@ -20,7 +20,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSoundOn, setIsSoundOn] = useState(true);
   const [soundUnlocked, setSoundUnlocked] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [showSoundToast, setShowSoundToast] = useState(true);
   const { theme, setTheme } = useTheme();
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -28,56 +28,78 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Play audio when sound is unlocked and isSoundOn is true
   useEffect(() => {
-    if (soundUnlocked && audioRef.current && isSoundOn) {
-      audioRef.current.play();
-    } else if (audioRef.current && !isSoundOn) {
-      audioRef.current.pause();
+    if (soundUnlocked && audioRef.current) {
+      isSoundOn ? audioRef.current.play() : audioRef.current.pause();
     }
   }, [soundUnlocked, isSoundOn]);
 
+  const handleEnableSound = async () => {
+    if (audioRef.current) {
+      try {
+        await audioRef.current.play();
+        setSoundUnlocked(true);
+        setIsSoundOn(true);
+        setShowSoundToast(false);
+      } catch (err) {
+        console.error("Playback failed:", err);
+      }
+    }
+  };
+
+  const handleToggleSound = async () => {
+    if (!soundUnlocked) {
+      await handleEnableSound();
+    } else {
+      setIsSoundOn((prev) => !prev);
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSoundToast(false);
+    }, 30000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
-      {/* Hidden audio element */}
       <audio ref={audioRef} src="/music.mp3" loop />
 
-      {/* Glassmorphic Floating Enable Sound Card */}
-      {!soundUnlocked && (
-        <motion.button
-          initial={{ opacity: 0, y: 20, scale: 0.8 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.4, type: "spring" }}
-          className="fixed bottom-6 right-6 z-[100] w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-indigo-500 shadow-lg flex items-center justify-center group border-2 border-white/30 hover:scale-110 transition-transform"
-          style={{ boxShadow: "0 2px 12px rgba(80,0,120,0.18)" }}
-          onClick={async () => {
-            if (audioRef.current) {
-              try {
-                await audioRef.current.play();
-                setSoundUnlocked(true);
-              } catch {}
-            }
-          }}
-          aria-label="Enable sound"
-          onMouseEnter={() => setShowTooltip(true)}
-          onMouseLeave={() => setShowTooltip(false)}
-        >
-          <span className="text-white animate-spin-slow">
-            <LuMusic size={22} />
-          </span>
-          {/* Tooltip */}
-          {showTooltip && (
-            <span className="absolute right-14 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-90 pointer-events-none whitespace-nowrap">
-              Enable Music
-            </span>
-          )}
-        </motion.button>
-      )}
+      <AnimatePresence>
+        {showSoundToast && (
+          <motion.div
+            className="fixed bottom-6 left-6 z-[100] backdrop-blur-md bg-black/80 text-white px-6 py-4 rounded-xl shadow-lg border border-[#FF4D00] w-[320px]"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.4 }}
+          >
+            <h2 className="text-lg font-semibold mb-1">Enable Sound</h2>
+            <p className="text-sm text-gray-300 mb-4">
+              For the best experience, please turn on sound 🎵
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                className="bg-[#FF4D00] hover:bg-[#e94400] text-white"
+                onClick={handleEnableSound}
+              >
+                Enable
+              </button>
+              <button
+                className="bg-white text-black hover:bg-gray-200"
+                onClick={() => setShowSoundToast(false)}
+              >
+                Skip
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <motion.header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
@@ -92,7 +114,7 @@ export default function Navbar() {
         <div className="container mx-auto px-6 flex justify-between items-center">
           <Link href="#home" className="text-2xl font-bold tracking-tighter">
             <span className="text-white">K</span>
-            <span className="text-neutral-400">S</span>
+            <span className="text-[#FF4D00]">S</span>
           </Link>
 
           <nav className="hidden md:flex items-center space-x-6">
@@ -108,13 +130,17 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
-            {/* Sound Button */}
             <button
-              className="ml-4 text-white"
-              onClick={() => setIsSoundOn((prev) => !prev)}
-              aria-label={isSoundOn ? "Mute sound" : "Play sound"}
+              className="text-white hover:text-[#FF4D00] text-sm font-medium"
+              onClick={handleToggleSound}
             >
-              {isSoundOn ? "🔊 Sound On" : "🔇 Sound Off"}
+              {isSoundOn && soundUnlocked ? "🔊 Sound On" : "🔇 Sound Off"}
+            </button>
+            <button
+              className="text-white hover:text-[#FF4D00]"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            >
+              {theme === "dark" ? <LuSun size={18} /> : <LuMoon size={18} />}
             </button>
           </nav>
 
@@ -164,19 +190,17 @@ export default function Navbar() {
                   </motion.li>
                 ))}
               </ul>
-              {/* Sound Button in Mobile Nav */}
               <button
-                className="mt-8 text-white font-brut"
-                onClick={() => setIsSoundOn((prev) => !prev)}
-                aria-label={isSoundOn ? "Mute sound" : "Play sound"}
+                className="mt-8 text-white font-medium"
+                onClick={handleToggleSound}
               >
-                {isSoundOn ? "🔊 Sound On" : "🔇 Sound Off"}
+                {isSoundOn && soundUnlocked ? "🔊 Sound On" : "🔇 Sound Off"}
               </button>
               <button
                 className="mt-4"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               >
-                Toggle {theme === "dark" ? "Light" : "Dark"} Mode
+                {theme === "dark" ? <LuSun size={18} /> : <LuMoon size={18} />}
               </button>
             </nav>
           </motion.div>
