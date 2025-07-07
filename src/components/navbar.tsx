@@ -62,7 +62,7 @@ export default function Navbar() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSoundToast(false);
-    }, 30000);
+    }, 10000);
     return () => clearTimeout(timer);
   }, []);
 
