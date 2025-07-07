@@ -1,9 +1,7 @@
 "use client";
-
-import { useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Float, Environment } from "@react-three/drei";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 
 import {
   LuGithub as Github,
@@ -13,19 +11,6 @@ import {
 import Link from "next/link";
 
 export default function Portfolio() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, -150]);
-
-  useEffect(() => {
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener("mousemove", updateMousePosition);
-    return () => window.removeEventListener("mousemove", updateMousePosition);
-  }, []);
-
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden relative">
       <div className="fixed inset-0 z-0">

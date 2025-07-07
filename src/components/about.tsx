@@ -23,7 +23,7 @@ export default function About() {
 
           <div className="space-y-6 text-neutral-400 leading-relaxed">
             <p>
-              I'm a passionate Software Developer Engineer with 3+ years of
+              I m a passionate Software Developer Engineer with 3+ years of
               experience building innovative solutions across various domains
               including blockchain, AI, and web development. My expertise spans
               frontend and backend technologies, with a focus on creating
@@ -37,7 +37,7 @@ export default function About() {
               perspective.
             </p>
             <p>
-              Throughout my career, I've worked on a diverse range of projects,
+              Throughout my career, I ve worked on a diverse range of projects,
               from DeFi platforms and AI-powered applications to e-commerce
               solutions and educational platforms. This breadth of experience
               has given me a unique perspective on software development and the

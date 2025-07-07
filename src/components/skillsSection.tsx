@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 const skillCategories = [
@@ -32,11 +32,6 @@ const skillCategories = [
 
 export default function SkillsSection() {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-black min-h-screen flex flex-col justify-center">

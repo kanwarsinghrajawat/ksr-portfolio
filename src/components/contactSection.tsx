@@ -131,7 +131,7 @@ export default function ContactSection() {
               {submitted ? (
                 <div className="bg-green-500/20 border border-green-500 rounded-lg p-4 text-center">
                   <p className="text-white">
-                    Thank you for your message! I'll get back to you soon.
+                    Thank you for your message! I ll get back to you soon.
                   </p>
                 </div>
               ) : (

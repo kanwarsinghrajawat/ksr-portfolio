@@ -18,54 +18,10 @@ export default function HeroSection() {
   useEffect(() => {
     // assert once that canvasRef.current is not null
     const canvasEl = canvasRef.current!;
-    const ctx = canvasEl.getContext("2d")!;
 
     // set your size
     canvasEl.width = window.innerWidth;
     canvasEl.height = window.innerHeight;
-
-    const particles: Particle[] = [];
-    const particleCount = 100;
-    const maxDistance = 200;
-
-    class Particle {
-      x: number;
-      y: number;
-      size: number;
-      speedX: number;
-      speedY: number;
-      color: string;
-
-      constructor() {
-        // now canvasEl can’t be null
-        this.x = Math.random() * canvasEl.width;
-        this.y = Math.random() * canvasEl.height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = Math.random() - 0.5;
-        this.speedY = Math.random() - 0.5;
-        this.color = `rgba(${Math.floor(
-          Math.random() * 100 + 155
-        )}, ${Math.floor(Math.random() * 100 + 155)}, ${Math.floor(
-          Math.random() * 255
-        )}, 0.7)`;
-      }
-
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        // use canvasEl here too
-        if (this.x > canvasEl.width || this.x < 0) this.speedX = -this.speedX;
-        if (this.y > canvasEl.height || this.y < 0) this.speedY = -this.speedY;
-      }
-
-      draw() {
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
 
     // ... rest of your init, animate, etc.
   }, []);
