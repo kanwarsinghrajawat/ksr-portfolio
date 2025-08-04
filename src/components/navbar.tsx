@@ -34,7 +34,15 @@ export default function Navbar() {
 
   useEffect(() => {
     if (soundUnlocked && audioRef.current) {
-      isSoundOn ? audioRef.current.play() : audioRef.current.pause();
+      if (audioRef.current) {
+        if (isSoundOn) {
+          audioRef.current
+            .play()
+            .catch((err) => console.error("Playback failed:", err));
+        } else {
+          audioRef.current.pause();
+        }
+      }
     }
   }, [soundUnlocked, isSoundOn]);
 

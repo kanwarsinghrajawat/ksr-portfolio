@@ -43,3 +43,4 @@ coverage/
 # yarn.lock
 # pnpm-lock.yaml
 public/*.mp4
+.vercel

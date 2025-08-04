@@ -10,7 +10,7 @@ const projects = [
     title: "Employee Management System",
     description: "Manage employee data, attendance, and performance.",
     techStack: ["Nextjs", "Java", "PostgreSQL"],
-    videoSrc: "/1.mp4",
+    videoSrc: "/8.mp4",
     size: "lg:col-span-2",
   },
   {
@@ -65,7 +65,6 @@ const projects = [
 ];
 
 export default function Projects() {
-  const [hovered, setHovered] = useState<number | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hasMounted, setHasMounted] = useState(false);
 
@@ -93,8 +92,6 @@ export default function Projects() {
             <div
               key={index}
               className={`relative group bg-neutral-950 border border-neutral-800 min-h-[300px] ${project.size}`}
-              onMouseEnter={() => setHovered(index)}
-              onMouseLeave={() => setHovered(null)}
             >
               <motion.video
                 autoPlay

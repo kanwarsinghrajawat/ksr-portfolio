@@ -39,7 +39,15 @@ export default function Hero() {
 
   useEffect(() => {
     if (audioRef.current && soundUnlocked) {
-      isSoundOn ? audioRef.current.play() : audioRef.current.pause();
+      if (audioRef.current) {
+        if (isSoundOn) {
+          audioRef.current
+            .play()
+            .catch((err) => console.error("Playback failed:", err));
+        } else {
+          audioRef.current.pause();
+        }
+      }
     }
   }, [isSoundOn, soundUnlocked]);
 
