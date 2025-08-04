@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/navbar";
 import Hero from "@/components/hero";
 import About from "@/components/about";
 import Experience from "@/components/experience";
@@ -8,6 +7,9 @@ import Education from "@/components/education";
 import Footer from "@/components/footer";
 import Cursor from "@/components/cursor";
 import SkillsSection from "@/components/skillsSection";
+import ContactSection from "@/components/contactSection";
+import BookCall from "@/components/BookCall";
+import StickyScrollCards from "@/components/experience";
 
 export const metadata: Metadata = {
   title: "Kanwar Singh | Software Developer",
@@ -19,20 +21,23 @@ export default function Home() {
   return (
     <main className="bg-black text-white">
       <Cursor />
-      <Navbar />
       <Hero />
+      <BookCall />
       <About />
 
       {/* Skills Section */}
       <SkillsSection />
 
-      <Experience />
+      {/* <Experience /> */}
+      <main className="bg-black min-h-screen">
+        <StickyScrollCards />
+      </main>
 
       {/* Projects Section */}
       <Projects />
 
       <Education />
-
+      <ContactSection />
       <Footer />
     </main>
   );

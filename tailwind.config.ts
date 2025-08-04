@@ -75,6 +75,7 @@ const config = {
       },
       fontFamily: {
         brut: ['"OT Brut"', "serif"],
+        arizona: ["Prata", "Georgia", "serif"],
       },
     },
   },

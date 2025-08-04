@@ -1,126 +1,198 @@
 "use client";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Float, Environment } from "@react-three/drei";
-import { motion } from "framer-motion";
 
-import {
-  LuGithub as Github,
-  LuLinkedin as Linkedin,
-  LuMail as Mail,
-} from "react-icons/lu";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-export default function Portfolio() {
-  return (
-    <div className="min-h-screen bg-black text-white overflow-hidden relative">
-      <div className="fixed inset-0 z-0">
-        <Canvas camera={{ position: [0, 0, 10], fov: 75 }}>
-          <ambientLight intensity={0.2} />
-          <pointLight position={[10, 10, 10]} intensity={0.5} />
-          <FloatingShapes />
-          <Environment preset="night" />
-          <OrbitControls
-            enableZoom={false}
-            enablePan={false}
-            autoRotate
-            autoRotateSpeed={0.5}
-          />
-        </Canvas>
-      </div>
+export default function Hero() {
+  const [hasMounted, setHasMounted] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isSoundOn, setIsSoundOn] = useState(true);
+  const [soundUnlocked, setSoundUnlocked] = useState(false);
+  const [showSoundToast, setShowSoundToast] = useState(true);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
-      <div className="relative z-10">
-        <div className="min-h-screen flex items-center justify-center px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tighter">
-              <span className="text-white">KANWAR</span>{" "}
-              <span className="text-neutral-400">SINGH</span>
-            </h1>
-            <h2 className="text-xl md:text-2xl font-light mb-8 text-neutral-400 tracking-wide">
-              SOFTWARE DEVELOPER ENGINEER
-            </h2>
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
-            <div className="flex justify-center space-x-6 mb-12">
-              <Link
-                href="https://github.com/kanwarsinghrajawat"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-white transition-colors duration-300"
-              >
-                <Github className="w-6 h-6" />
-                <span className="sr-only">GitHub</span>
-              </Link>
-              <Link
-                href="https://www.linkedin.com/in/kanwar-singh-241a60169/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-white transition-colors duration-300"
-              >
-                <Linkedin className="w-6 h-6" />
-                <span className="sr-only">LinkedIn</span>
-              </Link>
-              <Link
-                href="mailto:kanwarsinghrajawat3@gmail.com"
-                className="text-neutral-400 hover:text-white transition-colors duration-300"
-              >
-                <Mail className="w-6 h-6" />
-                <span className="sr-only">Email</span>
-              </Link>
-            </div>
+  const handleEnableSound = useCallback(async () => {
+    if (!audioRef.current) return;
 
-            <div className="inline-block border border-neutral-800 px-6 py-3 rounded-full">
-              <p className="text-neutral-400 text-sm tracking-widest uppercase">
-                3+ Years of Experience
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </div>
-  );
-}
+    try {
+      await audioRef.current.play();
+      setSoundUnlocked(true);
+      setIsSoundOn(true);
+      setShowSoundToast(false);
+    } catch (err) {
+      console.error("Playback failed:", err);
+    }
+  }, []);
 
-function FloatingShapes() {
+  const handleToggleSound = useCallback(async () => {
+    if (!soundUnlocked) {
+      await handleEnableSound();
+    } else {
+      setIsSoundOn((prev) => !prev);
+    }
+  }, [soundUnlocked, handleEnableSound]);
+
+  useEffect(() => {
+    if (audioRef.current && soundUnlocked) {
+      isSoundOn ? audioRef.current.play() : audioRef.current.pause();
+    }
+  }, [isSoundOn, soundUnlocked]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSoundToast(false), 10000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const soundIcon = isSoundOn && soundUnlocked ? "🔊" : "🔇";
+
+  if (!hasMounted) return null;
+
   return (
     <>
-      <Float speed={1} rotationIntensity={1} floatIntensity={2}>
-        <mesh position={[-4, 2, -5]}>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color="#333" wireframe />
-        </mesh>
-      </Float>
+      <audio ref={audioRef} src="/music.mp3" loop />
+      <AnimatePresence>
+        {showSoundToast && (
+          <motion.div
+            className="fixed bottom-6 left-6 z-[100] backdrop-blur-md bg-background border border-primary text-foreground px-6 py-4 rounded-xl shadow-xl w-[320px]"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.4 }}
+          >
+            <h2 className="text-lg font-semibold mb-1 font-orbitron">
+              Enable Sound
+            </h2>
+            <p className="text-sm text-muted-foreground mb-4">
+              For the best experience, please turn on sound 🎵
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                className="bg-primary text-primary-foreground hover:bg-primary/80 px-4 py-1 rounded font-bold"
+                onClick={handleEnableSound}
+              >
+                Enable
+              </button>
+              <button
+                className="bg-foreground text-background hover:bg-muted px-4 py-1 rounded"
+                onClick={() => setShowSoundToast(false)}
+              >
+                Skip
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <div
+        className={`min-h-screen text-white relative overflow-hidden transition-colors duration-300 font-[ArizonaFlare,Georgia,serif] ${
+          menuOpen
+            ? "bg-black"
+            : "bg-[url('/hero.jpg')] bg-cover bg-center bg-no-repeat"
+        }`}
+      >
+        <header className="flex justify-between items-center px-6 pt-6 text-sm z-50 relative">
+          <button
+            className="relative w-6 h-6 flex flex-col justify-center items-center group z-50"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-label="Toggle Menu"
+          >
+            {/* Top Line */}
+            <motion.span
+              className="block h-0.5 w-6 bg-white rounded-sm absolute"
+              animate={{
+                rotate: menuOpen ? 45 : 0,
+                y: menuOpen ? 0 : -6,
+              }}
+              transition={{ duration: 0.3 }}
+            />
+            {/* Bottom Line */}
+            <motion.span
+              className="block h-0.5 w-6 bg-white rounded-sm absolute"
+              animate={{
+                rotate: menuOpen ? -45 : 0,
+                y: menuOpen ? 0 : 6,
+              }}
+              transition={{ duration: 0.3 }}
+            />
+          </button>
 
-      <Float speed={1.5} rotationIntensity={2} floatIntensity={1}>
-        <mesh position={[4, -2, -3]}>
-          <sphereGeometry args={[0.8, 32, 32]} />
-          <meshStandardMaterial color="#444" wireframe />
-        </mesh>
-      </Float>
+          <h1 className="text-xl md:text-2xl font-normal tracking-wide font-mabry">
+            KANWAR SINGH
+          </h1>
 
-      <Float speed={0.8} rotationIntensity={1.5} floatIntensity={3}>
-        <mesh position={[2, 3, -7]}>
-          <octahedronGeometry args={[1]} />
-          <meshStandardMaterial color="#555" wireframe />
-        </mesh>
-      </Float>
-
-      <Float speed={1.2} rotationIntensity={0.5} floatIntensity={2}>
-        <mesh position={[-3, -3, -4]}>
-          <tetrahedronGeometry args={[1.2]} />
-          <meshStandardMaterial color="#666" wireframe />
-        </mesh>
-      </Float>
-
-      <Float speed={0.6} rotationIntensity={2} floatIntensity={1}>
-        <mesh position={[0, 4, -8]}>
-          <torusGeometry args={[1, 0.3, 16, 100]} />
-          <meshStandardMaterial color="#777" wireframe />
-        </mesh>
-      </Float>
+          <div className="flex items-center gap-6">
+            <Link
+              href="#contact"
+              className="hidden font-mabry md:block text-white/80 hover:text-white !text-2xl"
+            >
+              Contact
+            </Link>
+            <button
+              className="text-white/80 hover:text-white text-sm flex items-center gap-1"
+              onClick={handleToggleSound}
+            >
+              <span className="inline md:hidden">{soundIcon}</span>
+              <span className="hidden md:block font-mabry">
+                {soundIcon} {isSoundOn ? "Sound On" : "Sound Off"}
+              </span>
+            </button>
+          </div>
+        </header>
+        {!menuOpen && (
+          <main className="flex flex-col md:flex-row justify-end md:justify-between md:items-center h-[calc(100vh-80px)] px-2 md:px-20">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+              className="text-left"
+            >
+              <h2 className="text-5xl md:text-7xl leading-tight font-mabry">
+                <span className="block italic">MULTI-</span>
+                <span className="block italic">DISCIPLINARY</span>
+              </h2>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+              className="text-right"
+            >
+              <h2 className="text-5xl md:text-7xl leading-tight font-mabry sm:pt-96 italic">
+                <span className="block">SOFTWARE</span>
+                <span className="block md:mt-4">ENGINEER</span>
+              </h2>
+            </motion.div>
+          </main>
+        )}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black z-40 text-white px-6 py-8 pt-28"
+            >
+              <nav className="space-y-4 text-3xl md:text-5xl font-normal font-mabry italic flex flex-col">
+                {["work", "notes", "services", "profile", "lab", "contact"].map(
+                  (item) => (
+                    <Link
+                      key={item}
+                      href={`#${item}`}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {item.toUpperCase()}
+                    </Link>
+                  )
+                )}
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </>
   );
 }

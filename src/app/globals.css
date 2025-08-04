@@ -1,4 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Prata&display=swap");
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+
+@font-face {
+  font-family: "ArizonaFlare";
+  src: url("/fonts/ArizonaFlare-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-mabry {
+  font-family: "ArizonaFlare", sans-serif;
+}
 
 html {
   scroll-behavior: smooth;
@@ -40,7 +54,8 @@ button {
 
 @font-face {
   font-family: "OT Brut";
-  src: url("/fonts/OTBrut.woff2") format("woff2"),
+  src:
+    url("/fonts/OTBrut.woff2") format("woff2"),
     url("/fonts/OTBrut.woff") format("woff");
   font-weight: normal;
   font-style: normal;
@@ -55,4 +70,42 @@ button {
 }
 .animate-spin-slow {
   animation: spin-slow 3s linear infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+html,
+body {
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: auto; /* Let Lenis control it */
+}
+
+body {
+  @apply bg-black text-white;
+  cursor: none;
+}
+
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+}
+
+/* Optional: hide scrollbar, only after debugging */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
 }

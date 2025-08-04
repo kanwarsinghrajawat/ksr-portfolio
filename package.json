@@ -20,8 +20,11 @@
   },
   "dependencies": {
     "@eslint/eslintrc": "^3",
+    "@react-spring/parallax": "^10.0.1",
+    "@react-spring/web": "^10.0.1",
     "@react-three/drei": "^10.2.0",
     "@react-three/fiber": "^9.1.2",
+    "@studio-freight/lenis": "^1.0.42",
     "@types/three": "^0.177.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.11.4",
@@ -30,8 +33,9 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
+    "react-intersection-observer": "^9.16.0",
+    "react-scroll-parallax": "^3.4.5",
     "three": "^0.177.0"
-  
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -39,17 +43,18 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "^9.20.1",
     "eslint-config-next": "15.3.2",
-    "tailwindcss": "^4",
-    "typescript": "^5",
-      "eslint": "^9.20.1",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.3",
     "husky": "^8.0.0",
     "lint-staged": "^15.4.3",
     "prettier": "^3.5.1",
-    "prettier-plugin-tailwindcss": "^0.6.11"
-  },  "lint-staged": {
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": "eslint --cache --fix",
     "src/**/*.{js,jsx,ts,tsx,css,scss,md}": "prettier --write --ignore-unknown"
   }

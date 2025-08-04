@@ -5,44 +5,46 @@ import { useEffect, useRef, useState } from "react";
 const TRAIL_LENGTH = 20;
 
 export default function CursorTrail() {
+  const [hasMounted, setHasMounted] = useState(false);
   const [trail, setTrail] = useState<{ x: number; y: number }[]>([]);
   const requestRef = useRef<number | null>(null);
-  const [windowSize, setWindowSize] = useState<{
-    width: number;
-    height: number;
-  }>({
-    width: typeof window !== "undefined" ? window.innerWidth : 0,
-    height: typeof window !== "undefined" ? window.innerHeight : 0,
-  });
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    const handleResize = () => {
+    setHasMounted(true);
+
+    const updateSize = () => {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
       });
     };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
   }, []);
 
   useEffect(() => {
+    if (!hasMounted) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       setTrail((prev) => {
         const next = [...prev, { x: e.clientX, y: e.clientY }];
         return next.length > TRAIL_LENGTH ? next.slice(-TRAIL_LENGTH) : next;
       });
     };
+
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [hasMounted]);
 
-  // Animate the trail for smoothness
   useEffect(() => {
+    if (!hasMounted) return;
+
     const animate = () => {
       setTrail((prev) => {
         if (prev.length < 2) return prev;
-        // Slightly interpolate each point towards the next
         return prev.map((point, i, arr) => {
           if (i === arr.length - 1) return point;
           return {
@@ -53,13 +55,15 @@ export default function CursorTrail() {
       });
       requestRef.current = requestAnimationFrame(animate);
     };
+
     requestRef.current = requestAnimationFrame(animate);
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
-  }, []);
+  }, [hasMounted]);
 
-  // Build the SVG points string
+  if (!hasMounted) return null; // 👈 Prevents hydration mismatch
+
   const points = trail.map((p) => `${p.x},${p.y}`).join(" ");
 
   return (
@@ -72,7 +76,7 @@ export default function CursorTrail() {
       <polyline
         points={points}
         fill="none"
-        stroke="#fff"
+        stroke="#00FFFF"
         strokeWidth="3"
         strokeLinejoin="round"
         strokeLinecap="round"
