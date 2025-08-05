@@ -83,7 +83,7 @@ export default function Projects() {
     <section id="projects" className="bg-black py-24">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-4xl font-bold text-white mb-12 text-center">
-          Personal <span className="text-neutral-400">Projects</span>
+          Some Of My <span className="text-neutral-400">Work</span>
         </h2>
 
         {/* ✅ DESKTOP GRID */}

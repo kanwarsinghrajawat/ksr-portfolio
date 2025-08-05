@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
+import AnimatedText from "./AnimatedText";
 
 export default function Hero() {
   const [hasMounted, setHasMounted] = useState(false);
@@ -185,17 +186,31 @@ export default function Hero() {
               className="fixed inset-0 bg-black z-40 text-white px-6 py-8 pt-28"
             >
               <nav className="space-y-4 text-3xl md:text-5xl font-normal font-mabry italic flex flex-col">
-                {["work", "notes", "services", "profile", "lab", "contact"].map(
-                  (item) => (
-                    <Link
-                      key={item}
-                      href={`#${item}`}
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      {item.toUpperCase()}
-                    </Link>
-                  )
-                )}
+                {[
+                  { text: "work", page: "001" },
+                  { text: "notes", page: "002" },
+                  { text: "services", page: "003" },
+                  { text: "profile", page: "004" },
+                  { text: "lab", page: "005" },
+                  { text: "contact", page: "006" },
+                ].map(({ text, page }) => (
+                  <Link
+                    key={text}
+                    href={`#${text}`}
+                    onClick={() => setMenuOpen(false)}
+                    className="group flex justify-between items-center w-fit  transition-all duration-300"
+                  >
+                    {/* Left side: animated text */}
+                    <div className="block w-full px-2 py-1 transition-all duration-300 group-hover:bg-white group-hover:text-black">
+                      <AnimatedText text={text.toUpperCase()} />
+                    </div>
+
+                    {/* Right side: page number */}
+                    <div className="ml-4 text-xs md:text-sm font-mono transition-all duration-300 text-white group-hover:text-black opacity-0 group-hover:opacity-100">
+                      PAGE {page}
+                    </div>
+                  </Link>
+                ))}
               </nav>
             </motion.div>
           )}
