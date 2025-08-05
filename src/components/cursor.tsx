@@ -4,14 +4,23 @@ import { useEffect, useRef, useState } from "react";
 
 const TRAIL_LENGTH = 20;
 
+function isMobileDevice() {
+  if (typeof navigator === "undefined") return false;
+  return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
+}
+
 export default function CursorTrail() {
   const [hasMounted, setHasMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [trail, setTrail] = useState<{ x: number; y: number }[]>([]);
   const requestRef = useRef<number | null>(null);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     setHasMounted(true);
+    setIsMobile(isMobileDevice());
 
     const updateSize = () => {
       setWindowSize({
@@ -26,7 +35,7 @@ export default function CursorTrail() {
   }, []);
 
   useEffect(() => {
-    if (!hasMounted) return;
+    if (!hasMounted || isMobile) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       setTrail((prev) => {
@@ -37,10 +46,10 @@ export default function CursorTrail() {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [hasMounted]);
+  }, [hasMounted, isMobile]);
 
   useEffect(() => {
-    if (!hasMounted) return;
+    if (!hasMounted || isMobile) return;
 
     const animate = () => {
       setTrail((prev) => {
@@ -60,9 +69,9 @@ export default function CursorTrail() {
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
-  }, [hasMounted]);
+  }, [hasMounted, isMobile]);
 
-  if (!hasMounted) return null; // 👈 Prevents hydration mismatch
+  if (!hasMounted || isMobile) return null;
 
   const points = trail.map((p) => `${p.x},${p.y}`).join(" ");
 

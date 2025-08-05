@@ -53,7 +53,7 @@ export default function Hero() {
   }, [isSoundOn, soundUnlocked]);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowSoundToast(false), 10000);
+    const timer = setTimeout(() => setShowSoundToast(false), 3000);
     return () => clearTimeout(timer);
   }, []);
 

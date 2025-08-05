@@ -18,24 +18,24 @@ const AnimatedText = ({ text }: AnimatedTextProps) => {
     audioRef.current.volume = 0.4;
   }, []);
 
-  const handleHoverStart = () => {
-    // Clear stop timeout if hovering again
+  const startEffect = () => {
+    // Reset display text
+    setDisplayText(text);
+
+    // Clear sound timeout if any
     if (soundStopTimeoutRef.current) {
       clearTimeout(soundStopTimeoutRef.current);
       soundStopTimeoutRef.current = null;
     }
 
-    // Reset text
-    setDisplayText(text);
-
-    // Start sound immediately
+    // Play sound
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
       audioRef.current.play().catch((e) => console.error("Sound error:", e));
     }
 
-    // Start text scramble
+    // Scramble text
     let frame = 0;
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
@@ -58,7 +58,7 @@ const AnimatedText = ({ text }: AnimatedTextProps) => {
     }, 100);
   };
 
-  const handleHoverEnd = () => {
+  const stopEffect = () => {
     // Reset text
     setDisplayText(text);
 
@@ -68,7 +68,7 @@ const AnimatedText = ({ text }: AnimatedTextProps) => {
       intervalRef.current = null;
     }
 
-    // Set a timeout to stop sound after 2s
+    // Stop sound after delay
     if (soundStopTimeoutRef.current) {
       clearTimeout(soundStopTimeoutRef.current);
     }
@@ -78,13 +78,14 @@ const AnimatedText = ({ text }: AnimatedTextProps) => {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
       }
-    }, 2000);
+    }, 1500);
   };
 
   return (
     <motion.span
-      onHoverStart={handleHoverStart}
-      onHoverEnd={handleHoverEnd}
+      onHoverStart={startEffect}
+      onHoverEnd={stopEffect}
+      onClick={startEffect} // trigger same effect on click
       className="inline-block cursor-pointer text-4xl md:text-6xl font-black italic font-mabry tracking-tight px-2 py-1 transition-colors duration-300 group-hover:bg-white group-hover:text-black"
     >
       {displayText}
