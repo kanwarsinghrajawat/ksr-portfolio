@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import AboutUsCarousel from "./AboutUsCarousel";
+import { Parallax } from "react-scroll-parallax";
 
 export default function About() {
   function SequentialTypewriter({
@@ -165,7 +166,9 @@ export default function About() {
           </motion.div>
         </div>
       </div>
-      <AboutUsCarousel />
+      <Parallax speed={-10}>
+        <AboutUsCarousel />
+      </Parallax>
     </section>
   );
 }

@@ -11,7 +11,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#111213] text-white border-t border-white/10 py-10 min-h-screen h-screen flex flex-col justify-center">
+    <footer className="bg-[#111213] text-white border-t border-white/10 pt-40 py-8 md:py-24 flex flex-col justify-center">
       {/* ✅ Only parallax this part */}
       <Parallax speed={-20}>
         <h2 className="text-7xl md:text-[300px] leading-tight font-mabry">
