@@ -148,7 +148,7 @@ export default function About() {
       id="about"
       className="relative py-8 md:py-24 overflow-hidden bg-white"
     >
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 md:pb-16">
         <div className="flex my-12 justify-end">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

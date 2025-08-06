@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { Parallax } from "react-scroll-parallax";
 import {
   LuGithub as Github,
   LuLinkedin as Linkedin,
@@ -10,12 +11,17 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#111213] text-white border-t border-white/10 py-10 min-h-full h-full">
-      <h2 className="text-7xl md:text-[300px] leading-tight font-mabry">
-        <span className="block italic text-center">KANWAR</span>
-        <span className="block italic text-center">SINGH</span>
-      </h2>
-      <hr></hr>
+    <footer className="bg-[#111213] text-white border-t border-white/10 py-10 min-h-screen h-screen flex flex-col justify-center">
+      {/* ✅ Only parallax this part */}
+      <Parallax speed={-20}>
+        <h2 className="text-7xl md:text-[300px] leading-tight font-mabry">
+          <span className="block italic text-center">KANWAR</span>
+          <span className="block italic text-center">SINGH</span>
+        </h2>
+      </Parallax>
+
+      <hr />
+
       <div className="container mx-auto w-full px-6 mt-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

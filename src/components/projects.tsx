@@ -3,15 +3,35 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { LuExternalLink, LuGithub, LuVideo } from "react-icons/lu";
+import { LuExternalLink, LuGithub } from "react-icons/lu";
 
 const projects = [
   {
-    title: "Employee Management System",
-    description: "Manage employee data, attendance, and performance.",
-    techStack: ["Nextjs", "Java", "PostgreSQL"],
+    title: "Voice Game",
+    description: "Voice-controlled game using WebSockets.",
+    techStack: ["React", "WebSockets", "ContextAPI"],
     videoSrc: "/14.mp4",
     size: "lg:col-span-2",
+    github: "https://github.com/kanwarsinghrajawat/VoiceGameAi",
+    liveLink: "https://voice-game-ai.vercel.app/",
+  },
+  {
+    title: "ATS",
+    description: "Analytics dashboard for ecommerce stores.",
+    techStack: ["React", "Redux Toolkit", "Tailwind"],
+    videoSrc: "/11.mp4",
+    size: "lg:col-span-1",
+    github: " https://github.com/kanwarsinghrajawat/ats-ai",
+    liveLink: "https://ats-ek8xxb39m-kanwar-singhs-projects.vercel.app/",
+  },
+  {
+    title: "Chat Bot Builder",
+    description: "Real-time team communication with channels and DMs.",
+    techStack: ["Socket.io", "React", "Express"],
+    videoSrc: "/17.mp4",
+    size: "lg:col-span-3",
+    github: "https://github.com/kanwarsinghrajawat/chatBotFlowBuilder",
+    liveLink: "https://chat-bot-flow-builder.vercel.app/",
   },
   {
     title: "DeFi App (Web3)",
@@ -19,48 +39,46 @@ const projects = [
     techStack: ["Nextjs", "Typescript", "Redux"],
     videoSrc: "/2.mp4",
     size: "lg:col-span-1",
+    github: "https://github.com/kanwarsinghrajawat/web3-bridge-client",
+    liveLink: "https://web3-bridge-client.vercel.app/",
   },
   {
-    title: "Voice Game",
-    description: "Voice-controlled game using WebSockets.",
-    techStack: ["React", "WebSockets", "ContextAPI"],
+    title: "Employee Management System",
+    description: "Manage employee data, attendance, and performance.",
+    techStack: ["Nextjs", "Java", "PostgreSQL"],
     videoSrc: "/13.mp4",
-    size: "lg:col-span-1",
+    size: "lg:col-span-2",
+    github: "",
+    liveLink: "https://employee-management-system-alpha-gray.vercel.app/",
   },
+
   {
-    title: "E-commerce Dashboard",
-    description: "Analytics dashboard for ecommerce stores.",
-    techStack: ["React", "Redux Toolkit", "Tailwind"],
-    videoSrc: "/11.mp4",
-    size: "lg:col-span-1",
-  },
-  {
-    title: "Portfolio Builder",
+    title: "Dynamic Weather App",
     description: "Visual site builder with drag & drop UI.",
     techStack: ["Next.js", "Tailwind", "Framer Motion"],
     videoSrc: "/16.mp4",
     size: "lg:col-span-1",
+    github: "https://github.com/kanwarsinghrajawat/dynamic-weather-app",
+    liveLink: "https://dynamic-weathera-app.vercel.app/",
   },
   {
-    title: "Chat Platform",
+    title: "E commerece Dashboard",
     description: "Real-time team communication with channels and DMs.",
     techStack: ["Socket.io", "React", "Express"],
     videoSrc: "/12.mp4",
-    size: "lg:col-span-2",
+    size: "lg:col-span-1",
+    github: "https://github.com/kanwarsinghrajawat/analyticsPage",
+    liveLink:
+      "https://analytics-page-731rb7vsb-kanwar-singhs-projects.vercel.app/",
   },
   {
-    title: "Chat Platform",
+    title: "Video Player Application",
     description: "Real-time team communication with channels and DMs.",
     techStack: ["Socket.io", "React", "Express"],
     videoSrc: "/7.mp4",
     size: "lg:col-span-1",
-  },
-  {
-    title: "Chat Platform",
-    description: "Real-time team communication with channels and DMs.",
-    techStack: ["Socket.io", "React", "Express"],
-    videoSrc: "/17.mp4",
-    size: "lg:col-span-3",
+    github: "https://github.com/kanwarsinghrajawat/ReactVideoPlayer",
+    liveLink: "https://react-video-player-iota.vercel.app/",
   },
 ];
 
@@ -81,7 +99,7 @@ export default function Projects() {
 
   return (
     <section id="work" className="bg-black py-8 md:py-24">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="mx-auto px-4">
         <h2 className="text-4xl font-bold text-white mb-12 text-center">
           Some Of My <span className="text-neutral-400">Work</span>
         </h2>
@@ -91,7 +109,7 @@ export default function Projects() {
           {projects.map((project, index) => (
             <div
               key={index}
-              className={`relative group bg-neutral-950 border border-neutral-800 min-h-[300px] ${project.size}`}
+              className={`relative group bg-neutral-950 border border-neutral-800 min-h-[380px] ${project.size}`}
             >
               <motion.video
                 autoPlay
@@ -111,15 +129,24 @@ export default function Projects() {
                 </p>
               </div>
               <div className="absolute bottom-4 left-4 z-30 opacity-0 group-hover:opacity-100 transition duration-500 flex gap-3">
-                <Link href="#">
-                  <LuExternalLink className="text-white hover:text-teal-300 w-5 h-5" />
-                </Link>
-                <Link href="#">
-                  <LuGithub className="text-white hover:text-teal-300 w-5 h-5" />
-                </Link>
-                <Link href="#">
-                  <LuVideo className="text-white hover:text-teal-300 w-5 h-5" />
-                </Link>
+                {project.liveLink && (
+                  <Link
+                    href={project.liveLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <LuExternalLink className="text-white hover:text-teal-300 w-5 h-5" />
+                  </Link>
+                )}
+                {project.github && (
+                  <Link
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <LuGithub className="text-white hover:text-teal-300 w-5 h-5" />
+                  </Link>
+                )}
               </div>
             </div>
           ))}
@@ -163,15 +190,24 @@ export default function Projects() {
                     ))}
                   </div>
                   <div className="flex gap-4">
-                    <Link href="#">
-                      <LuExternalLink className="text-white hover:text-teal-300 w-5 h-5" />
-                    </Link>
-                    <Link href="#">
-                      <LuGithub className="text-white hover:text-teal-300 w-5 h-5" />
-                    </Link>
-                    <Link href="#">
-                      <LuVideo className="text-white hover:text-teal-300 w-5 h-5" />
-                    </Link>
+                    {projects[currentIndex].liveLink && (
+                      <Link
+                        href={projects[currentIndex].liveLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <LuExternalLink className="text-white hover:text-teal-300 w-5 h-5" />
+                      </Link>
+                    )}
+                    {projects[currentIndex].github && (
+                      <Link
+                        href={projects[currentIndex].github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <LuGithub className="text-white hover:text-teal-300 w-5 h-5" />
+                      </Link>
+                    )}
                   </div>
                 </div>
               </motion.div>
