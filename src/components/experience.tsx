@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { LuExternalLink as ExternalLink } from "react-icons/lu";
 import Link from "next/link";
 import ImageGrid from "./ImageGrid";
-import AnimatedText from "./AnimatedText";
 import ScrollAnimatedText from "./ScrollAnimatedText";
 
 const experiences = [
