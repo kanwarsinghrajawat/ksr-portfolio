@@ -39,6 +39,10 @@ const AboutUsCarousel = () => {
         x.set(offset);
       }}
     >
+      <p className="text-4xl font-bold  italic text-start text-black mb-8 pl-4">
+        SERVICES
+      </p>
+
       <motion.div
         ref={containerRef}
         className="flex gap-10 cursor-grab active:cursor-grabbing"

@@ -85,7 +85,7 @@ export default function About() {
               <span className="absolute top-0 left-0 block text-neutral-900 whitespace-pre-line">
                 {isLink && index <= currentLine ? (
                   <Link
-                    href="https://calendly.com/builders-club/30min"
+                    href="https://www.linkedin.com/in/kanwar-singh-241a60169/"
                     target="_blank"
                     className="underline font-medium"
                   >
@@ -140,7 +140,7 @@ export default function About() {
       },
       {
         type: "link",
-        content: "Get in touch",
+        content: "More on Linkedin",
       },
     ];
 

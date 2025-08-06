@@ -62,7 +62,7 @@ export default function Experience() {
       </h2>
       <ImageGrid />
 
-      <div className="grid grid-cols-1 gap-8 auto-rows-min p-10">
+      <div className="grid grid-cols-1 gap-8 auto-rows-min">
         {experiences.map((exp, idx) => (
           <motion.div
             key={idx}
@@ -76,8 +76,7 @@ export default function Experience() {
               {exp.title}
             </h3>
             <p className="text-sm text-white mb-4">
-              <span className="font-semibold">{exp.company}</span> —{" "}
-              {exp.period}
+              <span className="font-semibold">{exp.company}</span> —{exp.period}
             </p>
 
             <ul className="list-disc pl-5 text-white text-sm space-y-1 mb-4">

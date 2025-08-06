@@ -2,8 +2,8 @@ import Link from "next/link";
 import React from "react";
 const BookCall = () => {
   return (
-    <div className="flex justify-center items-center  bg-orange-500">
-      <div className="p-1 rounded-lg  w-full">
+    <div className="flex justify-center items-center  bg-[#ED5B2A]">
+      <div className="p-2 rounded-lg  w-full">
         <span className="text-black">Available for new projects,</span>
         <Link
           href="https://calendly.com/builders-club/30min"
