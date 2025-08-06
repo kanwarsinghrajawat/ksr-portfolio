@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Hero from "@/components/hero";
 import About from "@/components/about";
 import Projects from "@/components/projects";
-import Education from "@/components/education";
 import Footer from "@/components/footer";
 import Cursor from "@/components/cursor";
 import SkillsSection from "@/components/skillsSection";

@@ -80,7 +80,7 @@ export default function Projects() {
   if (!hasMounted) return null; // 🧨 Prevent hydration mismatch
 
   return (
-    <section id="projects" className="bg-black py-8 md:py-24">
+    <section id="work" className="bg-black py-8 md:py-24">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-4xl font-bold text-white mb-12 text-center">
           Some Of My <span className="text-neutral-400">Work</span>

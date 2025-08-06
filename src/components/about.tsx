@@ -26,15 +26,12 @@ export default function About() {
     });
 
     const [currentLine, setCurrentLine] = useState(-1);
-    const [hasStarted, setHasStarted] = useState(false);
 
     useEffect(() => {
       if (inView) {
         setCurrentLine(0);
-        setHasStarted(true);
       } else {
         setCurrentLine(-1);
-        setHasStarted(false);
       }
     }, [inView]);
 
@@ -103,8 +100,9 @@ export default function About() {
               <div key={index} className={`${commonClasses}`}>
                 {isVisible ? (
                   <Link
-                    href="#contact"
+                    href="https://calendly.com/builders-club/30min"
                     className="inline-block underline font-medium hover:underline"
+                    target="_blank"
                   >
                     {item.content}
                   </Link>

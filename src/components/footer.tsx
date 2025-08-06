@@ -46,6 +46,7 @@ export default function Footer() {
                 <Link
                   href="mailto:kanwarsinghrajawat3@gmail.com"
                   className="text-neutral-400 hover:text-white transition"
+                  target="_blank"
                 >
                   <Mail className="w-7 h-7" />
                 </Link>
