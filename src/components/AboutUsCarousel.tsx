@@ -4,10 +4,11 @@ import { motion, useMotionValue } from "framer-motion";
 import Image from "next/image";
 
 const cards = [
-  { src: "/blockchain.png", title: "FRONTEND" },
+  { src: "/frontend.png", title: "FRONTEND" },
   { src: "/blockchain.png", title: "BLOCKCHAIN" },
-  { src: "/blockchain.png", title: "BACKEND" },
-  { src: "/blockchain.png", title: "FULL STACK" },
+  { src: "/backend.png", title: "BACKEND" },
+  { src: "/fullstack.png", title: "FULL STACK" },
+  { src: "/foundingEngineer.png", title: "Founding Engineer" },
 ];
 
 const CARD_WIDTH = 320;
@@ -57,11 +58,11 @@ const AboutUsCarousel = () => {
             whileHover={{ scale: 1.05 }}
           >
             {/* Title ABOVE the image */}
-            <div className="text-center mb-4">
+            {/* <div className="text-center mb-4">
               <h2 className="text-xl md:text-2xl font-normal text-black font-mabry pl-4 text-left">
                 {card.title}
               </h2>
-            </div>
+            </div> */}
 
             {/* Image Card */}
             <motion.div

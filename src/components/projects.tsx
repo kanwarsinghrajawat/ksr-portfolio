@@ -49,7 +49,7 @@ const projects = [
     techStack: ["Nextjs", "Java", "PostgreSQL"],
     videoSrc: "/13.mp4",
     size: "lg:col-span-2",
-    github: "",
+    github: "https://github.com/kanwarsinghrajawat/analyticsPage",
     liveLink: "https://employee-management-system-alpha-gray.vercel.app/",
   },
 
