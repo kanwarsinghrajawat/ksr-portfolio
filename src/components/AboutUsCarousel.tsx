@@ -28,7 +28,7 @@ const AboutUsCarousel = () => {
 
   return (
     <div
-      className="relative overflow-hidden w-full py-20 bg-white"
+      className="relative overflow-hidden w-full pt-6 md:py-20 bg-white"
       onMouseMove={(e) => {
         const rect = containerRef.current?.getBoundingClientRect();
         if (!rect) return;

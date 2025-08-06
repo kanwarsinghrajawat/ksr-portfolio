@@ -4,15 +4,12 @@ import Link from "next/link";
 
 export default function ContactSection() {
   return (
-    <section
-      id="contact"
-      className="w-full px-4 md:px-12 py-24 bg-white text-black"
-    >
+    <section id="contact" className="w-full py-8 md:py-24 bg-white text-black">
       {/* Top Border */}
       <div className="border-t border-black mb-16" />
 
       {/* Title */}
-      <h2 className="text-center text-5xl md:text-6xl font-serif mb-16">
+      <h2 className="text-center text-7xl md:text-9xl mb-16 font-maribo">
         CONTACT
       </h2>
 
@@ -20,7 +17,7 @@ export default function ContactSection() {
       <div className="border-t border-black mb-12" />
 
       {/* Contact Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-24 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-24 mx-4 md:max-w-7xl md:mx-auto">
         <div>
           <h3 className="text-xl font-semibold mb-2">Inquiries</h3>
         </div>
@@ -28,22 +25,32 @@ export default function ContactSection() {
         <div>
           <h3 className="text-xl font-semibold mb-2">Email</h3>
           <a
-            href="mailto:youremail@example.com"
+            href="kanwarsinghrajawat3@gmail.com"
             className="underline hover:text-gray-700 transition-colors"
           >
-            youremail@example.com
+            kanwarsinghrajawat3@gmail.com
           </a>
         </div>
-
         <div>
           <h3 className="text-xl font-semibold mb-2">LinkedIn</h3>
           <Link
-            href="https://www.linkedin.com/in/your-profile"
+            href="https://www.linkedin.com/in/kanwar-singh-241a60169/"
             target="_blank"
             rel="noopener noreferrer"
             className="underline hover:text-gray-700 transition-colors"
           >
-            linkedin.com/in/your-profile
+            Linkedin
+          </Link>
+        </div>
+        <div>
+          <h3 className="text-xl font-semibold mb-2">Schedule A Call</h3>
+          <Link
+            href="https://calendly.com/builders-club/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-gray-700 transition-colors"
+          >
+            Get In Touch
           </Link>
         </div>
       </div>

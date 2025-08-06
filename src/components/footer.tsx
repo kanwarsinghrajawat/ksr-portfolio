@@ -24,23 +24,16 @@ export default function Footer() {
           transition={{ duration: 0.6 }}
           className="max-w-5xl mx-auto"
         >
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            {/* Left side: copyright */}
-            <div className="text-white/70 text-sm">
-              © 2013 — {new Date().getFullYear()} Kanwar Singh
-            </div>
-
-            {/* Right side: links and icons */}
-            <div className="flex flex-col md:items-end items-center space-y-3">
-              <div className="flex space-x-6">
+          <div className="flex flex-col md:flex-row justify-between items-end gap-6">
+            <div className="flex flex-col md:items-end items-center gap-4 w-full">
+              <div className="flex gap-8 items-center justify-between">
                 <Link
                   href="https://github.com/kanwarsinghrajawat"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-neutral-400 hover:text-white transition"
                 >
-                  <Github className="w-5 h-5" />
-                  <span className="sr-only">GitHub</span>
+                  <Github className="w-7 h-7" />
                 </Link>
                 <Link
                   href="https://www.linkedin.com/in/kanwar-singh-241a60169/"
@@ -48,34 +41,13 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="text-neutral-400 hover:text-white transition"
                 >
-                  <Linkedin className="w-5 h-5" />
-                  <span className="sr-only">LinkedIn</span>
+                  <Linkedin className="w-7 h-7" />
                 </Link>
                 <Link
                   href="mailto:kanwarsinghrajawat3@gmail.com"
                   className="text-neutral-400 hover:text-white transition"
                 >
-                  <Mail className="w-5 h-5" />
-                  <span className="sr-only">Email</span>
-                </Link>
-              </div>
-
-              <div className="flex space-x-6 text-sm text-white/70">
-                <Link
-                  href="https://www.instagram.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition"
-                >
-                  Instagram
-                </Link>
-                <Link
-                  href="https://www.linkedin.com/in/kanwar-singh-241a60169/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition"
-                >
-                  LinkedIn
+                  <Mail className="w-7 h-7" />
                 </Link>
               </div>
             </div>

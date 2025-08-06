@@ -20,16 +20,23 @@ export default function About() {
     delayBetween?: number;
     typeSpeed?: number;
   }) {
-    const [ref, inView] = useInView({ triggerOnce: true });
+    const [ref, inView] = useInView({
+      triggerOnce: false,
+      threshold: 0.3,
+    });
+
     const [currentLine, setCurrentLine] = useState(-1);
     const [hasStarted, setHasStarted] = useState(false);
 
     useEffect(() => {
-      if (inView && !hasStarted) {
+      if (inView) {
         setCurrentLine(0);
         setHasStarted(true);
+      } else {
+        setCurrentLine(-1);
+        setHasStarted(false);
       }
-    }, [inView, hasStarted]);
+    }, [inView]);
 
     useEffect(() => {
       if (currentLine >= 0 && currentLine < items.length - 1) {
@@ -39,26 +46,32 @@ export default function About() {
           },
           items[currentLine].content.length * typeSpeed + delayBetween
         );
+
         return () => clearTimeout(timeout);
       }
-    }, [currentLine]);
+    }, [currentLine, items, delayBetween, typeSpeed]);
 
     return (
-      <div ref={ref} className="space-y-3">
+      <div
+        ref={ref}
+        className="space-y-3 min-h-[400px]" // Prevents layout jumping
+      >
         {items.map((item, index) => {
           const isVisible = index <= currentLine;
           const colorClass = isVisible ? "text-neutral-800" : "text-gray-400";
           const commonClasses = `transition-colors duration-500 ${colorClass}`;
 
           const typedText = isVisible ? (
-            <Typewriter
-              words={[item.content]}
-              loop={1}
-              cursor={false}
-              typeSpeed={typeSpeed}
-              deleteSpeed={0}
-              delaySpeed={0}
-            />
+            <span className="inline-block whitespace-pre-line leading-relaxed">
+              <Typewriter
+                words={[item.content]}
+                loop={1}
+                cursor={false}
+                typeSpeed={typeSpeed}
+                deleteSpeed={0}
+                delaySpeed={0}
+              />
+            </span>
           ) : (
             item.content
           );
@@ -107,6 +120,7 @@ export default function About() {
       </div>
     );
   }
+
   const aboutItems: { type: "paragraph" | "list" | "link"; content: string }[] =
     [
       {
@@ -150,15 +164,18 @@ export default function About() {
     ];
 
   return (
-    <section id="about" className="relative py-24 overflow-hidden bg-white">
+    <section
+      id="about"
+      className="relative py-8 md:py-24 overflow-hidden bg-white"
+    >
       <div className="container mx-auto px-6">
         <div className="flex my-12 justify-end">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8 }}
-            className="w-full md:w-[95%] lg:w-[70%] relative"
+            className="w-full md:w-[95%] lg:w-[70%] relative min-h-[400px]"
           >
             <SequentialTypewriter
               items={aboutItems}

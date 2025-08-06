@@ -23,19 +23,11 @@ export default function Home() {
       <Hero />
       <BookCall />
       <About />
-
-      {/* Skills Section */}
       <SkillsSection />
-
-      {/* <Experience /> */}
       <main className="bg-black min-h-screen">
         <StickyScrollCards />
       </main>
-
-      {/* Projects Section */}
       <Projects />
-
-      <Education />
       <ContactSection />
       <Footer />
     </main>
