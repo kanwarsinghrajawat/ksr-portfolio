@@ -11,17 +11,18 @@ const items = [
     height: 140,
   },
   {
-    image: "/dzap.svg",
-    text: "",
-    width: 100,
-    height: 140,
-  },
-  {
     image: "/arcane.svg",
     text: "",
     width: 150,
     height: 100,
   },
+  {
+    image: "/dzap.svg",
+    text: "",
+    width: 100,
+    height: 140,
+  },
+
   {
     image: "/gable.avif",
     text: "",
@@ -54,8 +55,8 @@ const animationVariants = {
 
 export default function ImageGrid() {
   return (
-    <div className="py-16  bg-white">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="py-4 md:py-16  bg-white">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {items.map((item, idx) => (
           <motion.div
             key={idx}
@@ -75,13 +76,15 @@ export default function ImageGrid() {
                   className="object-contain mb-3"
                 />
                 {item.text && (
-                  <p className="text-sm text-gray-800 font-medium">
+                  <p className="text-xs md:text-sm text-gray-800 font-medium">
                     {item.text}
                   </p>
                 )}
               </>
             ) : (
-              <p className="text-lg text-gray-800 font-semibold">{item.text}</p>
+              <p className="text-md md:text-lg text-gray-800 font-semibold">
+                {item.text}
+              </p>
             )}
           </motion.div>
         ))}

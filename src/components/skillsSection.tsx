@@ -89,83 +89,84 @@ export default function SkillsSection() {
   }, [selectedIndex]);
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-black min-h-screen flex flex-col justify-center">
+    <section className=" px-4 mx-auto bg-white flex flex-col justify-center">
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-4xl font-bold text-center text-white mb-16"
+        className="text-4xl font-bold  italic text-start text-black mb-8"
       >
         Technical Skills
       </motion.h2>
-
-      <div className="relative w-full mb-12 overflow-x-auto scrollbar-hide">
-        <div className="relative flex justify-start sm:justify-center gap-6  min-w-max px-4 scroll-smooth snap-x">
-          {skillCategories.map((category, index) => (
-            <button
-              key={category.name}
-              onClick={(e) => {
-                setSelectedIndex(index);
-                e.currentTarget.scrollIntoView({
-                  behavior: "smooth",
-                  inline: "center",
-                  block: "nearest",
-                });
-              }}
-              className={`relative pb-3 snap-center text-sm font-medium uppercase tracking-wide whitespace-nowrap transition-all h-12 ${
-                selectedIndex === index
-                  ? "text-white font-semibold"
-                  : "text-white/60 hover:text-white"
-              }`}
-            >
-              {category.name}
-              {selectedIndex === index && (
-                <motion.div
-                  layoutId="underline"
-                  className="absolute bottom-0 left-0 right-0 h-[2px] bg-white z-10"
-                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                />
-              )}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Responsive flex-based skill grid */}
-      <div className="p-px">
-        <div className="flex flex-wrap justify-center">
-          {currentSkills.map((skill, i) => {
-            const showLogo = activeLogos[i] === 1;
-            return (
-              <div
-                key={skill}
-                className=" h-32 w-[50%] sm:w-[33.33%] md:w-[25%] lg:w-[20%] border border-neutral-800 flex items-center justify-center"
+      <div className="flex flex-col justify-center bg-black py-6 md:py-12 px-4">
+        <div className="relative w-full mb-12 overflow-x-auto scrollbar-hide">
+          <div className="relative flex justify-start sm:justify-center gap-6  min-w-max px-4 scroll-smooth snap-x">
+            {skillCategories.map((category, index) => (
+              <button
+                key={category.name}
+                onClick={(e) => {
+                  setSelectedIndex(index);
+                  e.currentTarget.scrollIntoView({
+                    behavior: "smooth",
+                    inline: "center",
+                    block: "nearest",
+                  });
+                }}
+                className={`relative pb-3 snap-center text-sm font-medium uppercase tracking-wide whitespace-nowrap transition-all h-12 ${
+                  selectedIndex === index
+                    ? "text-white font-semibold"
+                    : "text-white/60 hover:text-white"
+                }`}
               >
-                <AnimatePresence mode="wait">
+                {category.name}
+                {selectedIndex === index && (
                   <motion.div
-                    key={showLogo ? `${skill}-logo` : `${skill}-text`}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex flex-col items-center justify-center"
-                  >
-                    {showLogo && skillLogos[skill] ? (
-                      <img
-                        src={skillLogos[skill]}
-                        alt={skill}
-                        className="w-10 h-10 object-contain"
-                      />
-                    ) : (
-                      <span className="text-white font-medium text-center text-sm px-2">
-                        {skill}
-                      </span>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            );
-          })}
+                    layoutId="underline"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-white z-10"
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Responsive flex-based skill grid */}
+        <div className="p-px">
+          <div className="flex flex-wrap justify-center">
+            {currentSkills.map((skill, i) => {
+              const showLogo = activeLogos[i] === 1;
+              return (
+                <div
+                  key={skill}
+                  className=" h-32 w-[50%] sm:w-[33.33%] md:w-[25%] lg:w-[20%] border border-neutral-800 flex items-center justify-center"
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={showLogo ? `${skill}-logo` : `${skill}-text`}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex flex-col items-center justify-center"
+                    >
+                      {showLogo && skillLogos[skill] ? (
+                        <img
+                          src={skillLogos[skill]}
+                          alt={skill}
+                          className="w-10 h-10 object-contain"
+                        />
+                      ) : (
+                        <span className="text-white font-medium text-center text-sm px-2">
+                          {skill}
+                        </span>
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

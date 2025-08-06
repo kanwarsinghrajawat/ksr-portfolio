@@ -101,8 +101,8 @@ export default function Projects() {
   return (
     <section id="work" className="bg-white py-8 md:py-24">
       <div className="mx-auto px-4">
-        <h2 className="text-4xl font-bold text-black mb-12 text-center">
-          <ScrollAnimatedText text="    Some Of My Work" />
+        <h2 className="text-4xl font-bold text-black mb-12 text-left">
+          <ScrollAnimatedText text="Some Of My Work" />
         </h2>
 
         {/* ✅ DESKTOP GRID */}
@@ -173,7 +173,7 @@ export default function Projects() {
                   className="w-full h-[240px] object-cover"
                   src={projects[currentIndex].videoSrc}
                 />
-                <div className="p-5">
+                <div className="p-5 bg-black">
                   <h3 className="text-lg font-bold text-white mb-2">
                     {projects[currentIndex].title}
                   </h3>
@@ -219,13 +219,13 @@ export default function Projects() {
           <div className="flex justify-between items-center mt-6 px-4">
             <button
               onClick={prevSlide}
-              className="text-white text-sm hover:text-teal-400"
+              className="text-black text-sm hover:text-teal-400"
             >
               ← Prev
             </button>
             <button
               onClick={nextSlide}
-              className="text-white text-sm hover:text-teal-400"
+              className="text-black text-sm hover:text-teal-400"
             >
               Next →
             </button>

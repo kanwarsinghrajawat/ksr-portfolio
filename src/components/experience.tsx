@@ -57,12 +57,12 @@ const experiences = [
 export default function Experience() {
   return (
     <div className="bg-white py-16 px-6">
-      <h2 className="text-4xl font-bold text-black mb-12 text-center">
+      <h2 className="text-4xl text-left font-bold text-black mb-12">
         <ScrollAnimatedText text="Experience" />
       </h2>
       <ImageGrid />
 
-      <div className="grid grid-cols-1 gap-8 auto-rows-min">
+      <div className="grid grid-cols-1 gap-8 auto-rows-min p-10">
         {experiences.map((exp, idx) => (
           <motion.div
             key={idx}
@@ -70,7 +70,7 @@ export default function Experience() {
             whileInView={{ opacity: 1, y: 0 }}
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: idx * 0.1 }}
-            className="bg-[#111213]  p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-[#2E2E2E]  p-6 shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <h3 className="text-2xl font-semibold text-white mb-2">
               {exp.title}

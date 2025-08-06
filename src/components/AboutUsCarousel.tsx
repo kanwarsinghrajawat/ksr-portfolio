@@ -4,10 +4,10 @@ import { motion, useMotionValue } from "framer-motion";
 import Image from "next/image";
 
 const cards = [
-  { src: "/blockchain.png", title: "WORK" },
-  { src: "/blockchain.png", title: "SERVICES" },
-  { src: "/blockchain.png", title: "STRATEGY" },
-  { src: "/blockchain.png", title: "INNOVATION" },
+  { src: "/blockchain.png", title: "FRONTEND" },
+  { src: "/blockchain.png", title: "BLOCKCHAIN" },
+  { src: "/blockchain.png", title: "BACKEND" },
+  { src: "/blockchain.png", title: "FULL STACK" },
 ];
 
 const CARD_WIDTH = 320;
