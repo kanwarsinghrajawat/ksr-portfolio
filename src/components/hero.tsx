@@ -58,8 +58,6 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, []);
 
-  const soundIcon = isSoundOn && soundUnlocked ? "🔊" : "🔇";
-
   if (!hasMounted) return null;
 
   return (
@@ -208,12 +206,11 @@ export default function Hero() {
             >
               <nav className="space-y-4 text-3xl md:text-5xl font-normal font-mabry italic flex flex-col">
                 {[
-                  { text: "work", page: "001" },
-                  { text: "notes", page: "002" },
-                  { text: "services", page: "003" },
-                  { text: "profile", page: "004" },
-                  { text: "lab", page: "005" },
-                  { text: "contact", page: "006" },
+                  { text: "contact", page: "001" },
+                  { text: "about", page: "002" },
+                  { text: "some of my work", page: "003" },
+                  { text: "working experience", page: "004" },
+                  { text: "skills", page: "005" },
                 ].map(({ text, page }) => (
                   <Link
                     key={text}
