@@ -9,8 +9,9 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 export default function Hero() {
   const [hasMounted, setHasMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isSoundOn, setIsSoundOn] = useState(true);
+  const [isSoundOn, setIsSoundOn] = useState(false);
   const [soundUnlocked, setSoundUnlocked] = useState(false);
+
   const [showSoundToast, setShowSoundToast] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -102,7 +103,7 @@ export default function Hero() {
             : "bg-[url('/hero.jpg')] bg-cover bg-center bg-no-repeat"
         }`}
       >
-        <header className="flex justify-between items-center px-6 pt-6 text-sm z-50 relative">
+        <header className=" top-0 left-0 w-full flex justify-between items-center px-6 py-4 text-sm z-50 backdrop-blur-md bg-black/50">
           <button
             className="relative w-6 h-6 flex flex-col justify-center items-center group z-50"
             onClick={() => setMenuOpen((prev) => !prev)}
@@ -206,24 +207,25 @@ export default function Hero() {
             >
               <nav className="space-y-4 text-3xl md:text-5xl font-normal font-mabry italic flex flex-col">
                 {[
-                  { text: "contact", page: "001" },
-                  { text: "about", page: "002" },
-                  { text: "some of my work", page: "003" },
-                  { text: "working experience", page: "004" },
-                  { text: "skills", page: "005" },
-                ].map(({ text, page }) => (
+                  { text: "contact", href: "#contact", page: "001" },
+                  { text: "about", href: "#about", page: "002" },
+                  { text: "some of my work", href: "#work", page: "003" },
+                  {
+                    text: "working experience",
+                    href: "#experience",
+                    page: "004",
+                  },
+                  { text: "skills", href: "#skills", page: "005" },
+                ].map(({ text, href, page }) => (
                   <Link
                     key={text}
-                    href={`#${text}`}
+                    href={href}
                     onClick={() => setMenuOpen(false)}
-                    className="group flex justify-between items-center w-fit  transition-all duration-300"
+                    className="group flex justify-between items-center w-fit transition-all duration-300"
                   >
-                    {/* Left side: animated text */}
                     <div className="block w-full px-2 py-1 transition-all duration-300 group-hover:bg-white group-hover:text-black">
                       <AnimatedText text={text.toUpperCase()} />
                     </div>
-
-                    {/* Right side: page number */}
                     <div className="ml-4 text-xs md:text-sm font-mono transition-all duration-300 text-white group-hover:text-black opacity-0 group-hover:opacity-100">
                       PAGE {page}
                     </div>

@@ -1,48 +1,174 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Typewriter } from "react-simple-typewriter";
+import { useInView } from "react-intersection-observer";
+import Link from "next/link";
+import AboutUsCarousel from "./AboutUsCarousel";
 
 export default function About() {
-  return (
-    <section id="about" className="relative py-24 overflow-hidden">
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="max-w-3xl mx-auto"
-        >
-          <h2 className="text-3xl font-bold mb-12 tracking-tighter text-center">
-            <span className="text-white">ABOUT</span>{" "}
-            <span className="text-neutral-400">ME</span>
-          </h2>
+  function SequentialTypewriter({
+    items,
+    delayBetween = 600,
+    typeSpeed = 15,
+  }: {
+    items: {
+      type: "paragraph" | "list" | "link";
+      content: string;
+    }[];
+    delayBetween?: number;
+    typeSpeed?: number;
+  }) {
+    const [ref, inView] = useInView({ triggerOnce: true });
+    const [currentLine, setCurrentLine] = useState(-1);
+    const [hasStarted, setHasStarted] = useState(false);
 
-          <div className="space-y-6 text-neutral-400 leading-relaxed">
-            <p>
-              I m a passionate Software Developer Engineer with 3+ years of
-              experience building innovative solutions across various domains
-              including blockchain, AI, and web development. My expertise spans
-              frontend and backend technologies, with a focus on creating
-              seamless user experiences and robust architectures.
-            </p>
-            <p>
-              I thrive in collaborative environments and enjoy tackling complex
-              problems with creative solutions. My background in computer
-              science combined with hands-on industry experience allows me to
-              approach projects with both technical depth and business
-              perspective.
-            </p>
-            <p>
-              Throughout my career, I ve worked on a diverse range of projects,
-              from DeFi platforms and AI-powered applications to e-commerce
-              solutions and educational platforms. This breadth of experience
-              has given me a unique perspective on software development and the
-              ability to adapt to new technologies and challenges.
-            </p>
-          </div>
-        </motion.div>
+    useEffect(() => {
+      if (inView && !hasStarted) {
+        setCurrentLine(0);
+        setHasStarted(true);
+      }
+    }, [inView, hasStarted]);
+
+    useEffect(() => {
+      if (currentLine >= 0 && currentLine < items.length - 1) {
+        const timeout = setTimeout(
+          () => {
+            setCurrentLine((prev) => prev + 1);
+          },
+          items[currentLine].content.length * typeSpeed + delayBetween
+        );
+        return () => clearTimeout(timeout);
+      }
+    }, [currentLine]);
+
+    return (
+      <div ref={ref} className="space-y-3">
+        {items.map((item, index) => {
+          const isVisible = index <= currentLine;
+          const colorClass = isVisible ? "text-neutral-800" : "text-gray-400";
+          const commonClasses = `transition-colors duration-500 ${colorClass}`;
+
+          const typedText = isVisible ? (
+            <Typewriter
+              words={[item.content]}
+              loop={1}
+              cursor={false}
+              typeSpeed={typeSpeed}
+              deleteSpeed={0}
+              delaySpeed={0}
+            />
+          ) : (
+            item.content
+          );
+
+          if (item.type === "paragraph") {
+            return (
+              <p
+                key={index}
+                className={`text-2xl font-mabry leading-relaxed ${commonClasses}`}
+              >
+                {typedText}
+              </p>
+            );
+          }
+
+          if (item.type === "list") {
+            return (
+              <li
+                key={index}
+                className={`list-item font-mabry ml-5 ${commonClasses}`}
+              >
+                {typedText}
+              </li>
+            );
+          }
+
+          if (item.type === "link") {
+            return (
+              <div key={index} className={`${commonClasses}`}>
+                {isVisible ? (
+                  <Link
+                    href="#contact"
+                    className="inline-block underline font-medium hover:underline"
+                  >
+                    {item.content}
+                  </Link>
+                ) : (
+                  <span className="underline font-medium">{item.content}</span>
+                )}
+              </div>
+            );
+          }
+
+          return null;
+        })}
       </div>
+    );
+  }
+  const aboutItems: { type: "paragraph" | "list" | "link"; content: string }[] =
+    [
+      {
+        type: "paragraph",
+        content:
+          "I’m a product engineer who helps turn bold ideas into scalable, high-impact products.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "I combine startup speed with full-stack execution and product strategy to ship fast and scale smart.",
+      },
+      {
+        type: "paragraph",
+        content: "What I Do",
+      },
+      {
+        type: "list",
+        content: "MVPs & Launches: Rapid prototyping to production.",
+      },
+      {
+        type: "list",
+        content: "Web3: dApps, DEXs, DAOs, dashboards, token launches.",
+      },
+      {
+        type: "list",
+        content: "AI Interfaces: LLMs, voice, and analytics integration.",
+      },
+      {
+        type: "list",
+        content: "FinTech: Workflows, automation, and compliance systems.",
+      },
+      {
+        type: "list",
+        content: "Front-End: Fast, responsive UI/UX for web and mobile.",
+      },
+      {
+        type: "link",
+        content: "Get in touch",
+      },
+    ];
+
+  return (
+    <section id="about" className="relative py-24 overflow-hidden bg-white">
+      <div className="container mx-auto px-6">
+        <div className="flex my-12 justify-end">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="w-full md:w-[95%] lg:w-[70%] relative"
+          >
+            <SequentialTypewriter
+              items={aboutItems}
+              typeSpeed={15}
+              delayBetween={400}
+            />
+          </motion.div>
+        </div>
+      </div>
+      <AboutUsCarousel />
     </section>
   );
 }
