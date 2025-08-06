@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import AnimatedText from "./AnimatedText";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 export default function Hero() {
   const [hasMounted, setHasMounted] = useState(false);
@@ -143,11 +144,31 @@ export default function Hero() {
             <button
               className="text-white/80 hover:text-white text-sm flex items-center gap-1"
               onClick={handleToggleSound}
+              aria-label="Toggle Sound"
             >
-              <span className="inline md:hidden">{soundIcon}</span>
-              <span className="hidden md:block font-mabry">
-                {soundIcon} {isSoundOn ? "Sound On" : "Sound Off"}
-              </span>
+              {isSoundOn ? (
+                <DotLottieReact
+                  src="https://lottie.host/442a21c8-bb97-4f2a-aed3-8417ddca39be/myvm3pn6Ex.lottie"
+                  loop
+                  autoplay
+                  style={{
+                    width: 40,
+                    height: 40,
+                    filter: "brightness(0) invert(1)",
+                  }}
+                />
+              ) : (
+                <DotLottieReact
+                  src="https://lottie.host/f347d5d6-b432-4dd0-9d71-7f2fc5bac2d5/kWOVZxQyEO.lottie"
+                  loop
+                  autoplay
+                  style={{
+                    width: 40,
+                    height: 40,
+                    filter: "brightness(0) invert(1)",
+                  }}
+                />
+              )}
             </button>
           </div>
         </header>

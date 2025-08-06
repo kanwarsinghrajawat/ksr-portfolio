@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@eslint/eslintrc": "^3",
+    "@lottiefiles/dotlottie-react": "^0.14.4",
     "@react-spring/parallax": "^10.0.1",
     "@react-spring/web": "^10.0.1",
     "@react-three/drei": "^10.2.0",
