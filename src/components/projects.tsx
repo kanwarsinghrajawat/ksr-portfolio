@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { LuExternalLink, LuGithub } from "react-icons/lu";
+import ScrollAnimatedText from "./ScrollAnimatedText";
 
 const projects = [
   {
@@ -95,13 +96,13 @@ export default function Projects() {
   const prevSlide = () =>
     setCurrentIndex((prev) => (prev === 0 ? projects.length - 1 : prev - 1));
 
-  if (!hasMounted) return null; // 🧨 Prevent hydration mismatch
+  if (!hasMounted) return null;
 
   return (
-    <section id="work" className="bg-black py-8 md:py-24">
+    <section id="work" className="bg-white py-8 md:py-24">
       <div className="mx-auto px-4">
-        <h2 className="text-4xl font-bold text-white mb-12 text-center">
-          Some Of My <span className="text-neutral-400">Work</span>
+        <h2 className="text-4xl font-bold text-black mb-12 text-center">
+          <ScrollAnimatedText text="    Some Of My Work" />
         </h2>
 
         {/* ✅ DESKTOP GRID */}

@@ -3,6 +3,9 @@
 import { motion } from "framer-motion";
 import { LuExternalLink as ExternalLink } from "react-icons/lu";
 import Link from "next/link";
+import ImageGrid from "./ImageGrid";
+import AnimatedText from "./AnimatedText";
+import ScrollAnimatedText from "./ScrollAnimatedText";
 
 const experiences = [
   {
@@ -10,18 +13,17 @@ const experiences = [
     company: "DZap",
     period: "2022 - Present",
     description: [
-      "Led the design and implementation of DAAO.ai's token launch, reward and yield-farming systems, and contributor features.",
-      "Designed and developed an AI-powered platform enabling seamless transaction execution through simple prompts.",
-      "Developed a zapping infrastructure to facilitate direct migration, addition, or removal of liquidity.",
-      "Transformed the full application into a compact, versatile widget for flexible use.",
-      "Integrated smart contracts into the frontend and SDK.",
+      "Led token launch systems for DAAO.ai.",
+      "Built AI-powered transaction platform.",
+      "Created zapping infra for LP migration.",
+      "Turned app into a modular widget.",
+      "Integrated contracts into frontend SDK.",
     ],
     techStack:
-      "Nextjs, ReactJS, Solidity, ExpressJs, TypeScript, Postgrese, Tailwind, Redux, Jest, Viem, web3js, etherjs, wagmi",
+      "Nextjs, ReactJS, Solidity, ExpressJs, TypeScript, PostgreSQL, Tailwind, Redux, Jest, Viem, Web3, Ether.js, Wagmi",
     links: [
       { name: "app.dzap.io", url: "https://app.dzap.io" },
       { name: "daao.ai", url: "https://daao.ai" },
-      { name: "arcane.build", url: "https://arcane.build" },
     ],
   },
   {
@@ -29,123 +31,84 @@ const experiences = [
     company: "TEKENLIGHT SOLUTIONS",
     period: "2021 - 2022",
     description: [
-      "VOICEGAIN.AI - Created Voice AI apps with Speech-to-Text and LLM-powered APIs. Recorded & transcribed audio, generated summaries, sentiment analysis, and built conversational voice bots.",
-      "Financial Service Product - Developed frontend interfaces using React, WebSockets, TypeScript, and CSS3/SCSS.",
+      "Built voice AI apps with STT and LLM.",
+      "Developed financial dashboards using WebSockets.",
     ],
-    techStack: "React, WebSockets, TypeScript, CSS3/SCSS, Redux",
+    techStack: "React, WebSockets, TypeScript, SCSS, Redux",
   },
   {
     title: "Frontend Developer",
     company: "VERZEO EDUTECH",
     period: "2020 - 2021",
     description: [
-      "Galactic Space - Real Estate WebApp using Reactjs, Typescript, UseContext, Tailwind",
-      "Learn Skill - E-Learning WebApp using Reactjs, Typescript, UseContext, Tailwind",
+      "Built real estate and e-learning platforms.",
+      "Tech used: React, TypeScript, Tailwind.",
     ],
-    techStack: "Reactjs, Typescript, UseContext, Tailwind",
+    techStack: "React, TypeScript, UseContext, Tailwind",
   },
   {
     title: "Software Engineer",
     company: "Walmart",
     period: "2020",
-    description: ["Building a Data Portal."],
+    description: ["Built internal data portal for enterprise use."],
     techStack: "React, Redux, Node.js",
   },
 ];
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-24 bg-black">
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto"
-        >
-          <h2 className="text-3xl font-bold mb-16 tracking-tighter text-center">
-            <span className="text-white">WORK</span>{" "}
-            <span className="text-neutral-400">EXPERIENCE</span>
-          </h2>
+    <div className="bg-white py-16 px-6">
+      <h2 className="text-4xl font-bold text-black mb-12 text-center">
+        <ScrollAnimatedText text="Experience" />
+      </h2>
+      <ImageGrid />
 
-          <div className="space-y-16">
-            {experiences.map((exp, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative"
-              >
-                <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6">
-                  <div>
-                    <p className="text-neutral-500 text-sm tracking-wider">
-                      {exp.period}
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-1">
-                      {exp.title}
-                    </h3>
-                    <p className="text-neutral-400 mb-4">{exp.company}</p>
+      <div className="grid grid-cols-1 gap-8 auto-rows-min">
+        {experiences.map((exp, idx) => (
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: idx * 0.1 }}
+            className="bg-[#111213]  p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <h3 className="text-2xl font-semibold text-white mb-2">
+              {exp.title}
+            </h3>
+            <p className="text-sm text-white mb-4">
+              <span className="font-semibold">{exp.company}</span> —{" "}
+              {exp.period}
+            </p>
 
-                    <ul className="space-y-2 mb-4">
-                      {exp.description.map((item, i) => (
-                        <li
-                          key={i}
-                          className="text-neutral-500 text-sm leading-relaxed"
-                        >
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
+            <ul className="list-disc pl-5 text-white text-sm space-y-1 mb-4">
+              {exp.description.map((point, i) => (
+                <li key={i}>{point}</li>
+              ))}
+            </ul>
 
-                    <div className="mb-4">
-                      <h4 className="text-xs uppercase tracking-wider text-neutral-600 mb-2">
-                        Tech Stack
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {exp.techStack.split(", ").map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2 py-1 bg-neutral-900 text-neutral-400 text-xs rounded-sm"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+            <p className="text-xs text-gray-600 mb-4">
+              <strong>Tech Stack:</strong> {exp.techStack}
+            </p>
 
-                    {exp.links && (
-                      <div>
-                        <h4 className="text-xs uppercase tracking-wider text-neutral-600 mb-2">
-                          Links
-                        </h4>
-                        <div className="flex flex-wrap gap-3">
-                          {exp.links.map((link) => (
-                            <Link
-                              key={link.name}
-                              href={link.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center text-neutral-400 hover:text-white text-xs transition-colors duration-300"
-                            >
-                              <span>{link.name}</span>
-                              <ExternalLink className="ml-1 w-3 h-3" />
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+            {Array.isArray(exp.links) && exp.links.length > 0 && (
+              <div className="flex flex-wrap gap-3">
+                {exp.links.map((link, i) => (
+                  <Link
+                    key={i}
+                    href={link.url}
+                    target="_blank"
+                    className="text-blue-700 flex items-center gap-1 hover:underline text-sm"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        ))}
       </div>
-    </section>
+    </div>
   );
 }
