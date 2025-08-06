@@ -103,7 +103,7 @@ export default function Hero() {
             : "bg-[url('/hero.jpg')] bg-cover bg-center bg-no-repeat"
         }`}
       >
-        <header className=" top-0 left-0 w-full flex justify-between items-center px-6 py-4 text-sm z-50 backdrop-blur-md bg-black/50">
+        <header className="relative w-full flex justify-between items-center px-6 py-4 text-sm z-50 backdrop-blur-md bg-black/50">
           <button
             className="relative w-6 h-6 flex flex-col justify-center items-center group z-50"
             onClick={() => setMenuOpen((prev) => !prev)}

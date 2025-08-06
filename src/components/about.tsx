@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Typewriter } from "react-simple-typewriter";
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import AboutUsCarousel from "./AboutUsCarousel";
@@ -13,107 +12,90 @@ export default function About() {
     delayBetween = 600,
     typeSpeed = 15,
   }: {
-    items: {
-      type: "paragraph" | "list" | "link";
-      content: string;
-    }[];
+    items: { type: "paragraph" | "list" | "link"; content: string }[];
     delayBetween?: number;
     typeSpeed?: number;
   }) {
-    const [ref, inView] = useInView({
-      triggerOnce: false,
-      threshold: 0.3,
-    });
-
+    const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.3 });
     const [currentLine, setCurrentLine] = useState(-1);
+    const [typedLines, setTypedLines] = useState<string[]>([]);
 
     useEffect(() => {
       if (inView) {
+        setTypedLines(new Array(items.length).fill(""));
         setCurrentLine(0);
       } else {
+        setTypedLines([]);
         setCurrentLine(-1);
       }
     }, [inView]);
 
     useEffect(() => {
-      if (currentLine >= 0 && currentLine < items.length - 1) {
-        const timeout = setTimeout(
-          () => {
-            setCurrentLine((prev) => prev + 1);
-          },
-          items[currentLine].content.length * typeSpeed + delayBetween
-        );
+      if (currentLine < 0 || currentLine >= items.length) return;
 
-        return () => clearTimeout(timeout);
-      }
-    }, [currentLine, items, delayBetween, typeSpeed]);
+      const fullText = items[currentLine].content;
+      let i = 0;
+
+      const typeChar = () => {
+        setTypedLines((prev) => {
+          const updated = [...prev];
+          updated[currentLine] = fullText.slice(0, i + 1);
+          return updated;
+        });
+
+        if (i < fullText.length - 1) {
+          i++;
+          setTimeout(typeChar, typeSpeed);
+        } else {
+          setTimeout(() => setCurrentLine((prev) => prev + 1), delayBetween);
+        }
+      };
+
+      typeChar();
+    }, [currentLine]);
 
     return (
-      <div
-        ref={ref}
-        className="space-y-3 min-h-[400px]" // Prevents layout jumping
-      >
+      <div ref={ref} className="space-y-3 min-h-[400px]">
         {items.map((item, index) => {
-          const isVisible = index <= currentLine;
-          const colorClass = isVisible ? "text-neutral-800" : "text-gray-400";
-          const commonClasses = `transition-colors duration-500 ${colorClass}`;
+          const fullText = item.content;
+          const typedText = typedLines[index] || "";
 
-          const typedText = isVisible ? (
-            <span className="inline-block whitespace-pre-line leading-relaxed">
-              <Typewriter
-                words={[item.content]}
-                loop={1}
-                cursor={false}
-                typeSpeed={typeSpeed}
-                deleteSpeed={0}
-                delaySpeed={0}
-              />
-            </span>
-          ) : (
-            item.content
-          );
+          const baseClass =
+            item.type === "paragraph"
+              ? "text-2xl font-mabry leading-relaxed"
+              : item.type === "list"
+                ? "list-item font-mabry ml-5"
+                : "font-mabry";
 
-          if (item.type === "paragraph") {
-            return (
-              <p
-                key={index}
-                className={`text-2xl font-mabry leading-relaxed ${commonClasses}`}
-              >
-                {typedText}
-              </p>
-            );
-          }
+          const isLink = item.type === "link";
 
-          if (item.type === "list") {
-            return (
-              <li
-                key={index}
-                className={`list-item font-mabry ml-5 ${commonClasses}`}
-              >
-                {typedText}
-              </li>
-            );
-          }
+          return (
+            <div key={index} className={`relative ${baseClass}`}>
+              {/* Gray disabled background text */}
+              <span className="block text-gray-300 whitespace-pre-line">
+                {isLink ? (
+                  <span className="underline font-medium">{fullText}</span>
+                ) : (
+                  fullText
+                )}
+              </span>
 
-          if (item.type === "link") {
-            return (
-              <div key={index} className={`${commonClasses}`}>
-                {isVisible ? (
+              {/* Black typed overlay */}
+              <span className="absolute top-0 left-0 block text-neutral-900 whitespace-pre-line">
+                {isLink && index <= currentLine ? (
                   <Link
                     href="https://calendly.com/builders-club/30min"
-                    className="inline-block underline font-medium hover:underline"
                     target="_blank"
+                    className="underline font-medium"
                   >
-                    {item.content}
+                    {typedText}
                   </Link>
                 ) : (
-                  <span className="underline font-medium">{item.content}</span>
+                  typedText
                 )}
-              </div>
-            );
-          }
-
-          return null;
+              </span>
+            </div>
+          );
         })}
       </div>
     );
